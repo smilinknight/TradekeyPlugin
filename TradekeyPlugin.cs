@@ -51,7 +51,7 @@ namespace TradekeyPlugin
         private void WolrdLoaded(EventArgs args)
         {
             Commands.ChatCommands.Add(new Command("qol.tradekey", Tradekey, "tradekey"));
-            // World initialized; you can add any world-specific setup here if needed.
+            
         }
 
         public void Tradekey(CommandArgs args)
