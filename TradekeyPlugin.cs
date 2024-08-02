@@ -22,7 +22,7 @@ namespace TradekeyPlugin
 
         public override string Author => "Elly";
 
-        public override string Description => "Fuck you.";
+        public override string Description => "This plugin allows players to exchange their biome keys for specific biome chest weapons";
 
         
         public Dictionary<int, int> _keyItemMappings = new Dictionary<int, int>
@@ -68,14 +68,16 @@ namespace TradekeyPlugin
 
             if (!isBossDefeated)
             {
-                args.Player.SendErrorMessage("Команда не доступна на данном этапе игры!");
+                args.Player.SendErrorMessage("The command is not available at the current stage of the game. Defeat the Plantera first!");
+               // RU: // args.Player.SendErrorMessage("Команда не доступна на данном этапе игры. Плантера должна быть побеждена!");
                 return;
             }
 
 
             if (heldItemID <= 0)
             {
-                args.Player.SendMessage("Биомный ключ не обнаружен. Положите ключ в быстрый слот или щелкните по нему в инвентаре, а затем введите команду еще раз.", Color.Red);
+                args.Player.SendMessage("The biome key was not found. Put the key in your chosen hotbar slot or click on it in the inventory, and then enter the command again.", Color.Red);
+                // RU: // args.Player.SendMessage("Биомный ключ не обнаружен. Положите ключ в быстрый слот или щелкните по нему в инвентаре, а затем введите команду еще раз.", Color.Red);
                 return;
             }
 
@@ -85,7 +87,8 @@ namespace TradekeyPlugin
             {
                 if (player.SelectedItem.stack > 1)
                  {
-                    args.Player.SendMessage("Обнаружено несколько ключей в слоте, пожалуйста, обменивайте ключи по одному.", Color.Red);
+                    args.Player.SendMessage("Multiple keys in stack, please, exchange keys by one at a time.", Color.Red);
+                    // RU: // args.Player.SendMessage("Обнаружено несколько ключей в слоте, пожалуйста, обменивайте ключи по одному.", Color.Red);
                     return;
 
                 }
@@ -95,20 +98,22 @@ namespace TradekeyPlugin
                    
                     int heldItemIndex = player.TPlayer.selectedItem;
 
-                    player.GiveItem(rewardItemID, 1, 0);
+                    args.Player.SendMessage($"You have succesfully exchanged [i:{heldItemID}] for [i:{rewardItemID}] !", Color.Green);
+                    // RU: // args.Player.SendMessage($"Вы успешно обменяли [i:{heldItemID}] на [i:{rewardItemID}] !", Color.Green);
 
-
-                    
+                    player.GiveItem(rewardItemID, 1, 0);                 
                     player.TPlayer.inventory[heldItemIndex] = new Item(); // or Item.Empty
 
-                    
                     NetMessage.SendData((int)PacketTypes.PlayerSlot, player.Index, -1, null, player.Index, heldItemIndex);
+
+
                 }
 
             }
             else
             {
-                args.Player.SendMessage("Биомный ключ не обнаружен. Положите ключ в быстрый слот или щелкните по нему в инвентаре, а затем введите команду еще раз.", Color.Red);
+                args.Player.SendMessage("The biome key was not found. Put the key in your chosen hotbar slot or click on it in the inventory, and then enter the command again.", Color.Red);
+                // RU: // args.Player.SendMessage("Биомный ключ не обнаружен. Положите ключ в быстрый слот или щелкните по нему в инвентаре, а затем введите команду еще раз.", Color.Red);
                 return;
             }
         }
