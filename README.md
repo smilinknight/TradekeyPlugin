@@ -2,4 +2,4 @@
 
 This plugins allows players to exchange the biome keys for items from dungeon biome chests.
 
-Plugin permisson: ''qol.tradekey''
+# Plugin permisson: `qol.tradekey`
